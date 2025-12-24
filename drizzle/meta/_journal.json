@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1766583044528,
-      "tag": "0000_round_psylocke",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1766595350284,
-      "tag": "0001_overjoyed_ricochet",
+      "when": 1766604915982,
+      "tag": "0000_curved_microchip",
       "breakpoints": true
     }
   ]
