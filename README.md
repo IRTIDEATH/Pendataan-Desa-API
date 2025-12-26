@@ -29,6 +29,20 @@ Proyek ini dibangun menggunakan teknologi berikut:
 | Authentication | [**Better Auth**](https://www.better-auth.com/docs/integrations/nestjs) |
 | API Docs       | [**Swagger**](https://docs.nestjs.com/openapi/introduction)             |
 
+## Dokumentasi API
+
+Dokumentasi API lengkap dapat diakses melalui **Swagger UI** dengan mengunjungi endpoint berikut:
+
+```
+/api/docs
+```
+
+Dokumentasi ini menyediakan:
+- Daftar lengkap endpoint yang tersedia
+- Parameter request yang diperlukan
+- Format response untuk setiap endpoint
+- Kemampuan untuk mencoba endpoint langsung dari browser
+
 ## Kontribusi
 
 Dengan senang hati, kami menyambut kontribusi dari siapa pun. Bantu kembangkan Aplikasi? silakan membaca [panduan kontribusi](https://github.com/IRTIDEATH/Pendataan-Desa-API/blob/main/CONTRIBUTING.md) untuk informasi lebih lanjut.
