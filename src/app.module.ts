@@ -7,6 +7,9 @@ import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { DatabaseModule } from './common/database/database.module';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { admin, bearer, openAPI } from 'better-auth/plugins';
+import { PekerjaanModule } from './pekerjaan/pekerjaan.module';
+import { ErrorFilter } from './common/error.filter';
+import { APP_FILTER } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -14,6 +17,7 @@ import { admin, bearer, openAPI } from 'better-auth/plugins';
       isGlobal: true,
     }),
     DatabaseModule,
+    PekerjaanModule,
     AuthModule.forRootAsync({
       useFactory: (database: NodePgDatabase) => ({
         auth: betterAuth({
@@ -42,6 +46,12 @@ import { admin, bearer, openAPI } from 'better-auth/plugins';
       }),
       inject: [DATABASE_CONNECTION],
     }),
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: ErrorFilter,
+    },
   ],
 })
 export class AppModule {}
