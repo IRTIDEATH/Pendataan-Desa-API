@@ -8,6 +8,20 @@
       "when": 1766604915982,
       "tag": "0000_curved_microchip",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1766778124768,
+      "tag": "0001_awesome_fabian_cortez",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1766778803693,
+      "tag": "0002_confused_gwen_stacy",
+      "breakpoints": true
     }
   ]
 }

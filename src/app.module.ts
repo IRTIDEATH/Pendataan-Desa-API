@@ -27,6 +27,7 @@ import { APP_FILTER } from '@nestjs/core';
           emailAndPassword: {
             enabled: true,
             requireEmailVerification: false,
+            autoSignIn: false,
           },
           plugins: [openAPI(), admin(), bearer()],
           user: {
@@ -39,6 +40,11 @@ import { APP_FILTER } from '@nestjs/core';
                 type: 'boolean',
                 input: false,
               },
+            },
+          },
+          advanced: {
+            database: {
+              generateId: 'uuid',
             },
           },
           trustedOrigins: [`${process.env.UI_URL}`],

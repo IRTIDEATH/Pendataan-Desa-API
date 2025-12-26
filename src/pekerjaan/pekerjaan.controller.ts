@@ -10,7 +10,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { PekerjaanService } from './pekerjaan.service';
-import { AllowAnonymous } from '@thallesp/nestjs-better-auth';
 import { SearchPekerjaanDto } from './dto/search-pekerjaan.dto';
 import { CreatePekerjaanDto } from './dto/create-pekerjaan.dto';
 import { UpdatePekerjaanDto } from './dto/update-pekerjaan.dto';
@@ -24,7 +23,6 @@ import {
 } from '@nestjs/swagger';
 
 @ApiTags('pekerjaan')
-@AllowAnonymous()
 @Controller('pekerjaan')
 export class PekerjaanController {
   constructor(private readonly pekerjaanService: PekerjaanService) {}
