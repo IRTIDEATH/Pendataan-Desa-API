@@ -4,6 +4,7 @@ import { AuthService } from '@thallesp/nestjs-better-auth';
 import { toNodeHandler } from 'better-auth/node';
 import express from 'express';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -36,6 +37,17 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  const config = new DocumentBuilder()
+    .setTitle('Pendataan Desa API')
+    .setDescription(
+      'API documentation for Pendataan Desa application. This API provides endpoints for managing village data including residents, jobs, and registrations.',
+    )
+    .setVersion('1.0.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }
