@@ -31,7 +31,7 @@ export class PekerjaanService {
 
     if (!newPekerjaan) {
       throw new ConflictException(
-        'The job name has already been used. Please change it.',
+        'The pekerjaan name has already been used. Please change it.',
       );
     }
 
