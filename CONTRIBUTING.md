@@ -87,11 +87,7 @@ Anda dapat berkontribusi dengan cara:
 
 2. **Lakukan perubahan** yang diperlukan. Pastikan kode mengikuti standar yang sudah ditetapkan.
 
-3. **Format kode** Anda sebelum melakukan commit:
-
-   ```bash
-   npm run format
-   ```
+3. **Cek lint kode** Anda sebelum melakukan commit:
 
    ```bash
    npm run lint

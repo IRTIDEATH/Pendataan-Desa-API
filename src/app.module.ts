@@ -8,6 +8,7 @@ import { DatabaseModule } from './common/database/database.module';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { admin, bearer, openAPI } from 'better-auth/plugins';
 import { PekerjaanModule } from './pekerjaan/pekerjaan.module';
+import { WargaNegaraModule } from './warga_negara/warga-negara.module';
 import { ErrorFilter } from './common/error.filter';
 import { APP_FILTER } from '@nestjs/core';
 
@@ -18,6 +19,7 @@ import { APP_FILTER } from '@nestjs/core';
     }),
     DatabaseModule,
     PekerjaanModule,
+    WargaNegaraModule,
     AuthModule.forRootAsync({
       useFactory: (database: NodePgDatabase) => ({
         auth: betterAuth({
