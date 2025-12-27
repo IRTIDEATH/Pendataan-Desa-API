@@ -1,0 +1,1 @@
+ALTER TABLE "warga" ADD CONSTRAINT "warga_nik_unique" UNIQUE("nik");

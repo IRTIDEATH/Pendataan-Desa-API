@@ -11,6 +11,7 @@ import { PekerjaanModule } from './pekerjaan/pekerjaan.module';
 import { WargaNegaraModule } from './warga_negara/warga-negara.module';
 import { ErrorFilter } from './common/error.filter';
 import { APP_FILTER } from '@nestjs/core';
+import { WargaModule } from './warga/warga.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { APP_FILTER } from '@nestjs/core';
     DatabaseModule,
     PekerjaanModule,
     WargaNegaraModule,
+    WargaModule,
     AuthModule.forRootAsync({
       useFactory: (database: NodePgDatabase) => ({
         auth: betterAuth({

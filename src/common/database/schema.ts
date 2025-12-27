@@ -105,7 +105,7 @@ export const warga = pgTable('warga', {
     .notNull()
     .unique()
     .references(() => user.id, { onDelete: 'cascade' }),
-  nik: text('nik').notNull(),
+  nik: text('nik').notNull().unique(),
   namaWarga: text('nama_warga').notNull(),
   tempatLahir: text('tempat_lahir').notNull(),
   tanggalLahir: timestamp('tanggal_lahir', { mode: 'date' }).notNull(),
