@@ -62,11 +62,11 @@ export class UpdateWargaDto {
   alamat?: string;
 
   @ApiProperty({
-    description: 'Pekerjaan ID',
-    example: '550e8400-e29b-41d4-a716-446655440002',
+    description: 'Nama pekerjaan',
+    example: 'Software Engineer',
     required: false,
   })
-  @IsUUID()
+  @IsString()
   @IsOptional()
-  pekerjaanId?: string;
+  namaPekerjaan?: string;
 }

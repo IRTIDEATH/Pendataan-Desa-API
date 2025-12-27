@@ -21,28 +21,56 @@ export class WargaService {
   ) {}
 
   async create(dto: CreateWargaDto) {
-    const [newWarga] = await this.database
-      .insert(schema.warga)
-      .values({
-        userId: dto.userId,
-        nik: dto.nik,
-        namaWarga: dto.namaWarga,
-        tempatLahir: dto.tempatLahir,
-        tanggalLahir: dto.tanggalLahir,
-        warganegaraId: dto.warganegaraId,
-        alamat: dto.alamat,
-        pekerjaanId: dto.pekerjaanId,
-      })
-      .onConflictDoNothing()
-      .returning();
+    // Use transaction to ensure data consistency
+    return await this.database.transaction(async (tx) => {
+      let pekerjaanId: string;
 
-    if (!newWarga) {
-      throw new ConflictException(
-        'This user already has warga data or NIK already exists.',
-      );
-    }
+      // Check if the pekerjaan already exists
+      const existingPekerjaan = await tx
+        .select()
+        .from(schema.pekerjaan)
+        .where(eq(schema.pekerjaan.namaPekerjaan, dto.namaPekerjaan))
+        .limit(1);
 
-    return newWarga;
+      if (existingPekerjaan.length > 0) {
+        // If pekerjaan exists, use its ID
+        pekerjaanId = existingPekerjaan[0].id;
+      } else {
+        // If pekerjaan doesn't exist, create a new one
+        const newPekerjaan = await tx
+          .insert(schema.pekerjaan)
+          .values({
+            namaPekerjaan: dto.namaPekerjaan,
+          })
+          .returning();
+
+        pekerjaanId = newPekerjaan[0].id;
+      }
+
+      // Create warga with the pekerjaanId
+      const [newWarga] = await tx
+        .insert(schema.warga)
+        .values({
+          userId: dto.userId,
+          nik: dto.nik,
+          namaWarga: dto.namaWarga,
+          tempatLahir: dto.tempatLahir,
+          tanggalLahir: dto.tanggalLahir,
+          warganegaraId: dto.warganegaraId,
+          alamat: dto.alamat,
+          pekerjaanId,
+        })
+        .onConflictDoNothing()
+        .returning();
+
+      if (!newWarga) {
+        throw new ConflictException(
+          'This user already has warga data or NIK already exists.',
+        );
+      }
+
+      return newWarga;
+    });
   }
 
   async findAll(dto: SearchWargaDto) {
@@ -166,20 +194,51 @@ export class WargaService {
       }
     }
 
-    return this.database
-      .update(schema.warga)
-      .set({
-        nik: dto.nik,
-        namaWarga: dto.namaWarga,
-        tempatLahir: dto.tempatLahir,
-        tanggalLahir: dto.tanggalLahir,
-        warganegaraId: dto.warganegaraId,
-        alamat: dto.alamat,
-        pekerjaanId: dto.pekerjaanId,
-        updatedAt: new Date(),
-      })
-      .where(eq(schema.warga.id, wargaId))
-      .returning();
+    // Use transaction to ensure data consistency when updating pekerjaan
+    return await this.database.transaction(async (tx) => {
+      let pekerjaanId: string = existingWarga.pekerjaanId;
+
+      // Only process pekerjaan if it's provided in the update
+      if (dto.namaPekerjaan) {
+        // Check if the pekerjaan already exists
+        const existingPekerjaan = await tx
+          .select()
+          .from(schema.pekerjaan)
+          .where(eq(schema.pekerjaan.namaPekerjaan, dto.namaPekerjaan))
+          .limit(1);
+
+        if (existingPekerjaan.length > 0) {
+          // If pekerjaan exists, use its ID
+          pekerjaanId = existingPekerjaan[0].id;
+        } else {
+          // If pekerjaan doesn't exist, create a new one
+          const newPekerjaan = await tx
+            .insert(schema.pekerjaan)
+            .values({
+              namaPekerjaan: dto.namaPekerjaan,
+            })
+            .returning();
+
+          pekerjaanId = newPekerjaan[0].id;
+        }
+      }
+
+      // Update warga with the pekerjaanId
+      return tx
+        .update(schema.warga)
+        .set({
+          nik: dto.nik,
+          namaWarga: dto.namaWarga,
+          tempatLahir: dto.tempatLahir,
+          tanggalLahir: dto.tanggalLahir,
+          warganegaraId: dto.warganegaraId,
+          alamat: dto.alamat,
+          pekerjaanId,
+          updatedAt: new Date(),
+        })
+        .where(eq(schema.warga.id, wargaId))
+        .returning();
+    });
   }
 
   async remove(wargaId: string) {
@@ -227,6 +286,7 @@ export class WargaService {
         pekerjaanId: schema.warga.pekerjaanId,
         createdAt: schema.warga.createdAt,
         updatedAt: schema.warga.updatedAt,
+
         // Include related data
         userName: schema.user.name,
         userEmail: schema.user.email,

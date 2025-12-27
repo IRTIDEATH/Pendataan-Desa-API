@@ -61,10 +61,10 @@ export class CreateWargaDto {
   alamat: string;
 
   @ApiProperty({
-    description: 'Pekerjaan ID',
-    example: '550e8400-e29b-41d4-a716-446655440002',
+    description: 'Nama pekerjaan',
+    example: 'Software Engineer',
   })
-  @IsUUID()
+  @IsString()
   @IsNotEmpty()
-  pekerjaanId: string;
+  namaPekerjaan: string;
 }
