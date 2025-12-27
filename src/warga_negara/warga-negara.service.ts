@@ -94,30 +94,32 @@ export class WargaNegaraService {
   }
 
   async update(wargaNegaraId: string, dto: UpdateWargaNegaraDto) {
-    const existingWargaNegara = await this.findById(wargaNegaraId);
+    return await this.database.transaction(async (tx) => {
+      const existingWargaNegara = await this.findById(wargaNegaraId);
 
-    if (
-      dto.jenisKebangsaan &&
-      dto.jenisKebangsaan !== existingWargaNegara.jenisKebangsaan
-    ) {
-      const [conflictingWargaNegara] = await this.database
-        .select()
-        .from(schema.warganegara)
-        .where(eq(schema.warganegara.jenisKebangsaan, dto.jenisKebangsaan));
+      if (
+        dto.jenisKebangsaan &&
+        dto.jenisKebangsaan !== existingWargaNegara.jenisKebangsaan
+      ) {
+        const [conflictingWargaNegara] = await tx
+          .select()
+          .from(schema.warganegara)
+          .where(eq(schema.warganegara.jenisKebangsaan, dto.jenisKebangsaan));
 
-      if (conflictingWargaNegara) {
-        throw new ConflictException('Jenis kebangsaan already exists');
+        if (conflictingWargaNegara) {
+          throw new ConflictException('Jenis kebangsaan already exists');
+        }
       }
-    }
 
-    return this.database
-      .update(schema.warganegara)
-      .set({
-        jenisKebangsaan: dto.jenisKebangsaan,
-        updatedAt: new Date(),
-      })
-      .where(eq(schema.warganegara.id, wargaNegaraId))
-      .returning();
+      return tx
+        .update(schema.warganegara)
+        .set({
+          jenisKebangsaan: dto.jenisKebangsaan,
+          updatedAt: new Date(),
+        })
+        .where(eq(schema.warganegara.id, wargaNegaraId))
+        .returning();
+    });
   }
 
   async remove(wargaNegaraId: string) {

@@ -94,30 +94,32 @@ export class PekerjaanService {
   }
 
   async update(pekerjaanId: string, dto: UpdatePekerjaanDto) {
-    const existingPekerjaan = await this.findById(pekerjaanId);
+    return await this.database.transaction(async (tx) => {
+      const existingPekerjaan = await this.findById(pekerjaanId);
 
-    if (
-      dto.namaPekerjaan &&
-      dto.namaPekerjaan !== existingPekerjaan.namaPekerjaan
-    ) {
-      const [conflictingPekerjaan] = await this.database
-        .select()
-        .from(schema.pekerjaan)
-        .where(eq(schema.pekerjaan.namaPekerjaan, dto.namaPekerjaan));
+      if (
+        dto.namaPekerjaan &&
+        dto.namaPekerjaan !== existingPekerjaan.namaPekerjaan
+      ) {
+        const [conflictingPekerjaan] = await tx
+          .select()
+          .from(schema.pekerjaan)
+          .where(eq(schema.pekerjaan.namaPekerjaan, dto.namaPekerjaan));
 
-      if (conflictingPekerjaan) {
-        throw new ConflictException('Nama pekerjaan already exists');
+        if (conflictingPekerjaan) {
+          throw new ConflictException('Nama pekerjaan already exists');
+        }
       }
-    }
 
-    return this.database
-      .update(schema.pekerjaan)
-      .set({
-        namaPekerjaan: dto.namaPekerjaan,
-        updatedAt: new Date(),
-      })
-      .where(eq(schema.pekerjaan.id, pekerjaanId))
-      .returning();
+      return tx
+        .update(schema.pekerjaan)
+        .set({
+          namaPekerjaan: dto.namaPekerjaan,
+          updatedAt: new Date(),
+        })
+        .where(eq(schema.pekerjaan.id, pekerjaanId))
+        .returning();
+    });
   }
 
   async remove(pekerjaanId: string) {

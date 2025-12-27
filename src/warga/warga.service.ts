@@ -180,22 +180,21 @@ export class WargaService {
   }
 
   async update(wargaId: string, dto: UpdateWargaDto) {
-    const existingWarga = await this.findById(wargaId);
-
-    if (dto.nik && dto.nik !== existingWarga.nik) {
-      const [conflictingNIK] = await this.database
-        .select()
-        .from(schema.warga)
-        .where(eq(schema.warga.nik, dto.nik))
-        .limit(1);
-
-      if (conflictingNIK) {
-        throw new ConflictException('NIK already exists');
-      }
-    }
-
-    // Use transaction to ensure data consistency when updating pekerjaan
+    // Use transaction to ensure data consistency for both NIK and pekerjaan updates
     return await this.database.transaction(async (tx) => {
+      const existingWarga = await this.findById(wargaId);
+
+      if (dto.nik && dto.nik !== existingWarga.nik) {
+        const [conflictingNIK] = await tx
+          .select()
+          .from(schema.warga)
+          .where(eq(schema.warga.nik, dto.nik))
+          .limit(1);
+
+        if (conflictingNIK) {
+          throw new ConflictException('NIK already exists');
+        }
+      }
       let pekerjaanId: string = existingWarga.pekerjaanId;
 
       // Only process pekerjaan if it's provided in the update
