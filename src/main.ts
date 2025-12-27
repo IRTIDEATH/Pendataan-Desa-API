@@ -42,7 +42,6 @@ async function bootstrap() {
     .setTitle('Pendataan Desa API')
     .setDescription('API documentation for Pendataan Desa application.')
     .setVersion('1.0.0')
-    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);

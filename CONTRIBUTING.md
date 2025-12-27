@@ -21,7 +21,7 @@ Anda dapat berkontribusi dengan cara:
 
 ### Prasyarat
 
-- Node.js (versi 18 atau lebih tinggi)
+- Node.js (versi 20 atau lebih tinggi)
 - npm
 - PostgreSQL (versi 16 atau lebih tinggi)
 - Git
@@ -49,11 +49,11 @@ Anda dapat berkontribusi dengan cara:
 
    ```env
    DATABASE_URL=
- 
+
    BETTER_AUTH_SECRET=
- 
+
    BETTER_AUTH_URL="http://localhost:3000"
- 
+
    UI_URL="http://localhost:3001"
    ```
 
@@ -61,6 +61,9 @@ Anda dapat berkontribusi dengan cara:
 
    ```bash
    npm run db:generate
+   ```
+
+   ```bash
    npm run db:push
    ```
 
@@ -88,6 +91,9 @@ Anda dapat berkontribusi dengan cara:
 
    ```bash
    npm run format
+   ```
+
+   ```bash
    npm run lint
    ```
 
@@ -167,12 +173,12 @@ Untuk informasi lebih lengkap, kunjungi [Conventional Commits Specification](htt
    <summary>
       <h3>Bagaimana cara menjalankan test untuk endpoint tertentu?</h3>
    </summary>
-   
+
    Untuk menjalankan test untuk file tertentu:
    ```bash
    npm run test -- pekerjaan.service.spec.ts
    ```
-   
+
    Untuk menjalankan test dengan coverage:
    ```bash
    npm run test:cov

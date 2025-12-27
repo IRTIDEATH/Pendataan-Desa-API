@@ -27,21 +27,27 @@ Proyek ini dibangun menggunakan teknologi berikut:
 | Database       | [**PostgreSQL**](https://www.postgresql.org/)                           |
 | ORM            | [**Drizzle**](https://orm.drizzle.team/)                                |
 | Authentication | [**Better Auth**](https://www.better-auth.com/docs/integrations/nestjs) |
-| API Docs       | [**Swagger**](https://docs.nestjs.com/openapi/introduction)             |
 
 ## Dokumentasi API
 
-Dokumentasi API lengkap dapat diakses melalui **Swagger UI** dengan mengunjungi endpoint berikut:
+Dokumentasi API lengkap dapat diakses dengan mengunjungi endpoint berikut:
 
 ```
 /api/docs
 ```
 
+Untuk dokumentasi khusus endpoint autentikasi, Anda dapat mengunjungi:
+
+```
+/api/auth/reference
+```
+
 Dokumentasi ini menyediakan:
+
 - Daftar lengkap endpoint yang tersedia
+- Kemampuan untuk mencoba endpoint langsung dari browser
 - Parameter request yang diperlukan
 - Format response untuk setiap endpoint
-- Kemampuan untuk mencoba endpoint langsung dari browser
 
 ## Kontribusi
 
