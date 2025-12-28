@@ -44,7 +44,6 @@ export class WargaController {
           warganegaraId: '550e8400-e29b-41d4-a716-446655440002',
           alamat: 'Jl. Merdeka No. 123, Jakarta Pusat',
           pekerjaanId: '550e8400-e29b-41d4-a716-446655440003',
-          pekerjaanNama: 'Software Engineer',
           createdAt: '2023-06-15T08:30:00.000Z',
           updatedAt: '2023-06-15T08:30:00.000Z',
         },
