@@ -14,6 +14,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { WargaModule } from './warga/warga.module';
 import { PindahModule } from './pindah/pindah.module';
 import { JenisRegisterModule } from './jenis_register/jenis-register.module';
+import { RegisterModule } from './register/register.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { JenisRegisterModule } from './jenis_register/jenis-register.module';
     WargaModule,
     PindahModule,
     JenisRegisterModule,
+    RegisterModule,
     AuthModule.forRootAsync({
       useFactory: (database: NodePgDatabase) => ({
         auth: betterAuth({
