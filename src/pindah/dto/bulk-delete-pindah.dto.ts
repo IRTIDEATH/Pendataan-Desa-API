@@ -1,4 +1,4 @@
-import { IsArray, IsUUID, IsNotEmpty } from 'class-validator';
+import { IsArray, IsUUID, ArrayNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class BulkDeletePindahDto {
@@ -11,7 +11,7 @@ export class BulkDeletePindahDto {
     isArray: true,
   })
   @IsArray()
-  @IsUUID('all', { each: true })
-  @IsNotEmpty()
+  @IsUUID('4', { each: true })
+  @ArrayNotEmpty()
   ids: string[];
 }

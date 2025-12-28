@@ -39,7 +39,8 @@ export class PekerjaanService {
   }
 
   async findAll(dto: SearchPekerjaanDto) {
-    const offset = (dto.current_page - 1) * dto.size;
+    const { current_page = 1, size = 10 } = dto;
+    const offset = (current_page - 1) * size;
 
     const whereCondition = dto.q
       ? ilike(schema.pekerjaan.namaPekerjaan, `%${dto.q}%`)
@@ -57,7 +58,7 @@ export class PekerjaanService {
       .orderBy(desc(schema.pekerjaan.createdAt));
 
     const [pekerjaan, [{ count }]] = await Promise.all([
-      query.limit(dto.size).offset(offset),
+      query.limit(size).offset(offset),
       this.database
         .select({ count: sql`count(*)`.mapWith(Number) })
         .from(schema.pekerjaan)
@@ -68,9 +69,9 @@ export class PekerjaanService {
       data: pekerjaan,
       pagination: {
         totalItems: count,
-        currentPage: dto.current_page,
-        pageSize: dto.size,
-        totalPages: Math.ceil(count / dto.size),
+        currentPage: current_page,
+        pageSize: size,
+        totalPages: Math.ceil(count / size),
       },
     };
   }

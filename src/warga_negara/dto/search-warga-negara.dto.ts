@@ -1,36 +1,34 @@
 import { Type } from 'class-transformer';
 import { IsInt, IsOptional, IsString, Min } from 'class-validator';
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class SearchWargaNegaraDto {
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Search query for jenis kebangsaan',
-    example: 'WNI',
+    required: false,
   })
   @IsString()
   @IsOptional()
-  q: string;
+  q?: string;
 
-  @ApiPropertyOptional({
-    description: 'Page number (default: 1)',
+  @ApiProperty({
+    description: 'Current page number',
     example: 1,
-    minimum: 1,
-    default: 1,
+    required: false,
   })
   @IsOptional()
   @IsInt()
   @Min(1)
   @Type(() => Number)
-  current_page: number = 1;
+  current_page?: number = 1;
 
-  @ApiPropertyOptional({
-    description: 'Page size (default: 10)',
+  @ApiProperty({
+    description: 'Number of items per page',
     example: 10,
-    minimum: 1,
-    default: 10,
+    required: false,
   })
   @IsOptional()
   @IsInt()
   @Type(() => Number)
-  size: number = 10;
+  size?: number = 10;
 }

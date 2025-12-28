@@ -74,9 +74,8 @@ export class WargaService {
   }
 
   async findAll(dto: SearchWargaDto) {
-    const pageSize = dto.size || 10;
-    const currentPage = dto.current_page || 1;
-    const offset = (currentPage - 1) * pageSize;
+    const { current_page = 1, size = 10 } = dto;
+    const offset = (current_page - 1) * size;
 
     const whereCondition = dto.q
       ? or(
@@ -120,7 +119,7 @@ export class WargaService {
       .orderBy(desc(schema.warga.createdAt));
 
     const [wargas, [{ count }]] = await Promise.all([
-      query.limit(pageSize).offset(offset),
+      query.limit(size).offset(offset),
       this.database
         .select({ count: sql`count(*)`.mapWith(Number) })
         .from(schema.warga)
@@ -131,9 +130,9 @@ export class WargaService {
       data: wargas,
       pagination: {
         totalItems: count,
-        currentPage: currentPage,
-        pageSize: pageSize,
-        totalPages: Math.ceil(count / pageSize),
+        currentPage: current_page,
+        pageSize: size,
+        totalPages: Math.ceil(count / size),
       },
     };
   }

@@ -7,13 +7,13 @@ export class CreateWargaDto {
     description: 'User ID that owns this warga data',
     example: '550e8400-e29b-41d4-a716-446655440000',
   })
-  @IsUUID()
+  @IsUUID('4')
   @IsNotEmpty()
   userId: string;
 
   @ApiProperty({
     description: 'Nomor Induk Kependudukan',
-    example: '3171011502970001',
+    example: '1234567890123456',
   })
   @IsString()
   @IsNotEmpty()
@@ -48,7 +48,7 @@ export class CreateWargaDto {
     description: 'Warga negara ID',
     example: '550e8400-e29b-41d4-a716-446655440001',
   })
-  @IsUUID()
+  @IsUUID('4')
   @IsNotEmpty()
   warganegaraId: string;
 

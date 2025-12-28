@@ -5,8 +5,6 @@ export class CreatePekerjaanDto {
   @ApiProperty({
     description: 'Nama pekerjaan',
     example: 'Teacher',
-    minLength: 1,
-    maxLength: 100,
   })
   @IsString()
   @IsNotEmpty()

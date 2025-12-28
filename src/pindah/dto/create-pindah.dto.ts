@@ -5,8 +5,6 @@ export class CreatePindahDto {
   @ApiProperty({
     description: 'Jenis pindah',
     example: 'Datang',
-    minLength: 1,
-    maxLength: 50,
   })
   @IsString()
   @IsNotEmpty()

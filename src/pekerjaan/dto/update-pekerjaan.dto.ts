@@ -1,13 +1,12 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreatePekerjaanDto } from './create-pekerjaan.dto';
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdatePekerjaanDto extends PartialType(CreatePekerjaanDto) {
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Nama pekerjaan',
     example: 'Lecturer',
-    minLength: 1,
-    maxLength: 100,
+    required: false,
   })
   namaPekerjaan?: string;
 }

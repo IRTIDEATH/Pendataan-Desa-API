@@ -1,14 +1,12 @@
-import { IsString, IsOptional, Length } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
+import { CreatePindahDto } from './create-pindah.dto';
 
-export class UpdatePindahDto {
+export class UpdatePindahDto extends PartialType(CreatePindahDto) {
   @ApiProperty({
     description: 'Jenis pindah',
     example: 'Keluar',
     required: false,
   })
-  @IsString()
-  @IsOptional()
-  @Length(1, 50)
   jenisPindah?: string;
 }

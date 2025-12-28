@@ -5,8 +5,6 @@ export class CreateWargaNegaraDto {
   @ApiProperty({
     description: 'Jenis kebangsaan',
     example: 'WNI',
-    minLength: 1,
-    maxLength: 100,
   })
   @IsString()
   @IsNotEmpty()

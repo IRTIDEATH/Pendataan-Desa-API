@@ -1,20 +1,20 @@
 import { IsOptional, IsString, IsInt, Min } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class SearchPindahDto {
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Search query for jenis pindah',
-    example: 'Datang',
+    required: false,
   })
   @IsString()
   @IsOptional()
   q?: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Current page number',
     example: 1,
-    default: 1,
+    required: false,
   })
   @IsInt()
   @Min(1)
@@ -22,10 +22,10 @@ export class SearchPindahDto {
   @Type(() => Number)
   current_page?: number = 1;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Number of items per page',
     example: 10,
-    default: 10,
+    required: false,
   })
   @IsInt()
   @Min(1)
