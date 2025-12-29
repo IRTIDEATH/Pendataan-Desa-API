@@ -49,6 +49,33 @@ Dokumentasi ini menyediakan:
 - Parameter request yang diperlukan
 - Format response untuk setiap endpoint
 
+### ER diagrams
+
+![ER Diagram](image/er-diagrams.png)
+
+Untuk melihat diagram ER interaktif menggunakan Liam ERD, ikuti langkah-langkah berikut:
+
+1.  **Inisialisasi Liam ERD CLI:**
+    Jika Anda belum melakukannya, inisialisasi CLI Liam ERD dengan perintah berikut:
+    ```bash
+    npx @liam-hq/cli init
+    ```
+
+2.  **Bangun Diagram ER dari Skema Drizzle Anda:**
+    Gunakan perintah `erd build`. Pastikan untuk mengganti `src/common/database/schema.ts` dengan jalur yang benar ke file skema Drizzle Anda. Jika skema Anda terbagi dalam beberapa file, Anda dapat menggunakan pola glob.
+    ```bash
+    npx @liam-hq/cli erd build --format drizzle --input "src/common/database/schema.ts"
+    ```
+    Perintah ini akan menghasilkan file-file visualisasi ERD di direktori `dist`.
+
+3.  **Sajikan Diagram ER Menggunakan Server HTTP Lokal:**
+    Setelah diagram ER dihasilkan, Anda dapat melihatnya di browser Anda dengan menjalankan server HTTP lokal dari direktori `dist`:
+    ```bash
+    npx serve dist/
+    ```
+    Buka URL yang diberikan (biasanya `http://localhost:3000`) di browser Anda untuk melihat diagram ER interaktif.
+
+
 ## Kontribusi
 
 Dengan senang hati, kami menyambut kontribusi dari siapa pun. Bantu kembangkan Aplikasi? silakan membaca [panduan kontribusi](https://github.com/IRTIDEATH/Pendataan-Desa-API/blob/main/CONTRIBUTING.md) untuk informasi lebih lanjut.
